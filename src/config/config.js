@@ -5,7 +5,8 @@ const Joi = require("joi");
 dotenv.config({ path: path.resolve(".env") });
 
 const envSchema = Joi.object({
-    PORT: Joi.number().integer().default(5001).required()
+    PORT: Joi.number().integer().default(5001),
+    BASE_URL: Joi.string().default("http://localhost:5001"),
 });
 
 function getConfig() {

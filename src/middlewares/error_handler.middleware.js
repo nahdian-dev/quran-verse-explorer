@@ -4,7 +4,8 @@ const errorConverter = (err, res, req, next) => {
     let error = err;
 
     if (!(error instanceof CustomApiError)) {
-        error = new CustomApiError(error.statusCode, error.message);
+        const statusCode = error.statusCode || 500;
+        error = new CustomApiError(statusCode, error.message);
     }
     next(error);
 };

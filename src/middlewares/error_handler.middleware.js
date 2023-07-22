@@ -1,0 +1,25 @@
+const CustomApiError = require("../utilities/CustomApiError");
+
+const errorConverter = (err, res, req, next) => {
+    let error = err;
+
+    if (!(error instanceof CustomApiError)) {
+        error = new CustomApiError(error.statusCode, error.message);
+    }
+    next(error);
+};
+
+// eslint-disable-next-line no-unused-vars
+const errorHandler = (err, req, res, next) => {
+    let { statusCode, message } = err;
+
+    const response = {
+        code: statusCode,
+        message: message,
+        stack: err.stack
+    };
+
+    res.status(statusCode).send(response);
+};
+
+module.exports = { errorConverter, errorHandler };

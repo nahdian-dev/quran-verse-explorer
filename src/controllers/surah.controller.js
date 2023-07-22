@@ -1,5 +1,6 @@
-const surahServices = require("../services/surah.services");
 const _ = require("lodash");
+
+const surahServices = require("../services/surah.services");
 
 // @desc Surah
 // @route GET - http://localhost:5000/surah,
@@ -17,10 +18,10 @@ const getSurahByQuery = (req, res) => {
     const isContainingValue = differentArray.length === 0;
 
     if (!isContainingValue) {
-        return res.send("Not found parameters");
+        return res.send("Parameter is not available, check the allowed parameters again in the main menu!");
     }
 
-    const getSurahByQuery = surahServices.getSurahByQuery();
+    const getSurahByQuery = surahServices.getSurahByQuery(req.query.t, req.query.r);
     return res.send(getSurahByQuery);
 };
 

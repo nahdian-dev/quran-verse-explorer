@@ -13,7 +13,7 @@ const getSurahByQuery = (req, res) => {
     }
 
     const keysQuery = Object.keys(req.query);
-    const allowedQuery = ["t", "r"];
+    const allowedQuery = ["t", "r", "v"];
     const differentArray = _.difference(keysQuery, allowedQuery);
     const isContainingValue = differentArray.length === 0;
 
@@ -21,7 +21,7 @@ const getSurahByQuery = (req, res) => {
         return res.send("Parameter is not available, check the allowed parameters again in the main menu!");
     }
 
-    const getSurahByQuery = surahServices.getSurahByQuery(req.query.t, req.query.r);
+    const getSurahByQuery = surahServices.getSurahByQuery(req.query.t, req.query.r, req.query.v);
     return res.send(getSurahByQuery);
 };
 

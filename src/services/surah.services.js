@@ -4,21 +4,44 @@ const quran = require("../data/quran-api-id.json");
 const CustomApiError = require("../utilities/CustomApiError");
 
 /* eslint-disable no-unused-vars */
-exports.getSurahByQuery = (t, q) => {
-    const listSurah = quran.map(({ ayahs, bismilllah, ...rest }) => rest);
-    const listTranslation = quran.map(({ ayahs, bismilllah, ...rest }) => rest.translation);
+exports.getSurahByQuery = (t, r, v) => {
+    t = (typeof t === "undefined") ? "" : t;
+    r = (typeof r === "undefined") ? "" : r;
+    v = (typeof v === "undefined") ? "" : v;
 
-    let indexOfTranslation;
+    const listSurah = quran.map(({ ayahs, bismillah, ...rest }) => rest);
 
-    listTranslation.forEach((element, index) => {
-        if (element.toLowerCase() === t.toLowerCase()) {
-            indexOfTranslation = index;
+    let result = [];
+
+    let indexOfTranslation = [];
+    let listIndexOfRevelation = [];
+    let listIndexOfVerse = [];
+
+    listSurah.forEach((element, index) => {
+        if (element.translation.toLowerCase() === t.toLowerCase()) {
+            indexOfTranslation.push(index);
+        }
+        if (element.revelation.toLowerCase() === r.toLowerCase()) {
+            listIndexOfRevelation.push(index);
+        }
+        if (element.numberOfAyahs === parseInt(v)) {
+            listIndexOfVerse.push(index);
         }
     });
 
-    if ((typeof indexOfTranslation == "undefined")) {
-        throw new CustomApiError(404, "Could't found surah!");
-    }
+    const values = [];
+    const mergeIndex = [];
+    mergeIndex.push(indexOfTranslation, listIndexOfRevelation, listIndexOfVerse);
+    mergeIndex.forEach((element, index) => {
+        if (element.length !== 0) {
+            values.push(element);
+        }
+    });
 
-    return listSurah[indexOfTranslation];
+    const commonValues = _.intersection(...values);
+    commonValues.forEach((element) => {
+        result.push(listSurah[element]);
+    });
+
+    return result;
 };

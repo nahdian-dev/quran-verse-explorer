@@ -24,8 +24,12 @@ const endpoints = [
 const home = (req, res) => {
     res.json({
         endpoints,
-        maintainer: "Nahdian - nahdian.dev@gmail.com",
-        source: "https://github.com/nahdian-dev/quran-verse-explorer.git",
+        maintainer: "Nahdian",
+        references: {
+            email: "nahdian.dev@gmail.com",
+            github: "https://github.com/nahdian-dev",
+            linkedIn: "https://www.linkedin.com/in/nah-dian-40952a1a5"
+        }
     });
 };
 

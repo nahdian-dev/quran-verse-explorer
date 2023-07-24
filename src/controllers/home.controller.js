@@ -4,14 +4,17 @@ const endpoints = [
     {
         description: "API Mencari Surah Berdasarkan Optional Parameter yang Diizinkan",
         parameter: [
-            "translation",
-            "revelation",
-            "verse",
-            "verse_less_than",
-            "verse_more_than",
-            "number_of_surah"
+            "t",
+            "r",
+            "v"
         ],
-        example: `${config.value.BASE_URL}/surah?translation=pembukaan&revelation=makkiyah&verse=7`
+        description_paramter: [
+            "t = untuk mencari surah berdasarkan translation/arti",
+            "r = untuk mencari surah berdasarkan revelation/diturunkan (hanya string: makkiyah, madaniyah)",
+            "v = untuk mencari surah berdasarkan jumlah ayat",
+            "tanpa parameter = menampilkan data surah Al-Quran"
+        ],
+        example: `${config.value.BASE_URL}/surah?t=pembukaan&r=makkiyah&v=7`
     }
 ];
 

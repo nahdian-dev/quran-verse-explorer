@@ -4,7 +4,7 @@
   "description": "API Mencari Ayat Al-Quran",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon run src/index.js"
+    "dev": "node src/index.js"
   },
   "author": "Nahdian",
   "license": "ISC",

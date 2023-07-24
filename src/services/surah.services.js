@@ -9,9 +9,7 @@ exports.getSurahByQuery = (t, r, v) => {
     r = (typeof r === "undefined") ? "" : r;
     v = (typeof v === "undefined") ? "" : v;
 
-    const listSurah = quran.map(({ ayahs, bismillah, ...rest }) => rest);
-
-    let result = [];
+    const listSurah = quran.map(({ ayahs, bismillah, audio, ...rest }) => rest);
 
     let indexOfTranslation = [];
     let listIndexOfRevelation = [];
@@ -29,15 +27,29 @@ exports.getSurahByQuery = (t, r, v) => {
         }
     });
 
+    function notFoundSurah(t, r, v) {
+        if (t !== "" && indexOfTranslation.length === 0) {
+            throw new CustomApiError(404, "Could't found surah!");
+        }
+        if (r !== "" && listIndexOfRevelation.length === 0) {
+            throw new CustomApiError(404, "Could't found surah!");
+        }
+        if (v !== "" && listIndexOfVerse.length === 0) {
+            throw new CustomApiError(404, "Could't found surah!");
+        }
+    }
+    notFoundSurah(t, r, v);
+
     const values = [];
     const mergeIndex = [];
     mergeIndex.push(indexOfTranslation, listIndexOfRevelation, listIndexOfVerse);
-    mergeIndex.forEach((element, index) => {
+    mergeIndex.forEach((element) => {
         if (element.length !== 0) {
             values.push(element);
         }
     });
 
+    let result = [];
     const commonValues = _.intersection(...values);
     commonValues.forEach((element) => {
         result.push(listSurah[element]);

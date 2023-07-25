@@ -1,6 +1,6 @@
 const _ = require("lodash");
 
-const surahServices = require("../services/surah.services");
+const surahServicesV1 = require("../services/v1.surah.services");
 const quran = require("../data/quran-api-id.json");
 
 // @desc Surah
@@ -29,7 +29,7 @@ const getSurahByQuery = (req, res) => {
         return res.send("Parameter is duplicate!");
     }
 
-    const getSurahByQuery = surahServices.getSurahByQuery(req.query.t, req.query.r, req.query.v);
+    const getSurahByQuery = surahServicesV1.getSurahByQuery(req.query.t, req.query.r, req.query.v);
     return res.send(getSurahByQuery);
 };
 

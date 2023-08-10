@@ -1,30 +1,31 @@
-const express = require("express");
-const cors = require("cors");
-
 const config = require("./config/config");
-const routes = require("./routes");
-const CustomApiError = require("./utilities/CustomApiError");
-const { errorConverter, errorHandler } = require("./middlewares/error_handler.middleware");
+const app = require("./app");
 
-// Instance
-const app = express();
-
-// Body Parser
-app.use(express.json());
-
-//CORS
-app.use(cors());
-
-// Routes
-app.use("/", routes);
-
-// Error Handling
-app.use((req, res, next) => {
-    next(new CustomApiError(404, "Not found"));
-});
-app.use(errorConverter);
-app.use(errorHandler);
-
-app.listen(config.value.PORT, () => {
+const server = app.listen(config.value.PORT, () => {
     console.log(`- Server are listening on port: ${config.value.PORT}`);
 });
+
+const exitHandler = () => {
+    if (server) {
+        server.close(() => {
+            process.exit(1);
+        });
+    } else {
+        process.exit(1);
+    }
+};
+
+const unexpectedErrorHandler = () => {
+    exitHandler();
+};
+
+process.on("uncaughtException", unexpectedErrorHandler);
+process.on("unhandledRejection", unexpectedErrorHandler);
+
+process.on("SIGTERM", () => {
+    if (server) {
+        server.close();
+    }
+});
+
+module.exports = server;

@@ -4,12 +4,16 @@
   "description": "API Mencari Ayat Al-Quran",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "nodemon src/.",
+    "start": "node src/.",
+    "test": "jest --detectOpenHandles"
   },
   "author": "Nahdian",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.45.0"
+    "eslint": "^8.45.0",
+    "jest": "^29.6.2",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "cors": "^2.8.5",

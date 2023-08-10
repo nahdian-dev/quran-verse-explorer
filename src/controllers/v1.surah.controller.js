@@ -2,6 +2,7 @@ const _ = require("lodash");
 
 const surahServicesV1 = require("../services/v1.surah.services");
 const quran = require("../data/quran-api-id.json");
+const CustomApiError = require("../utilities/CustomApiError");
 
 // @desc Surah
 // @route GET - http://localhost:5000/surah,
@@ -15,6 +16,7 @@ const getSurahByQuery = (req, res) => {
         return res.send(listSurah);
     }
 
+    // CHECK PARAMETER
     const keysQuery = Object.keys(req.query);
     const allowedQuery = ["t", "r", "v"];
     const differentArray = _.difference(keysQuery, allowedQuery);
@@ -30,6 +32,11 @@ const getSurahByQuery = (req, res) => {
     }
 
     const getSurahByQuery = surahServicesV1.getSurahByQuery(req.query.t, req.query.r, req.query.v);
+
+    if (getSurahByQuery.length === 0) {
+        throw new CustomApiError(404, "Could't found surah!");
+    }
+
     return res.send(getSurahByQuery);
 };
 

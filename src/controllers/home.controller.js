@@ -3,7 +3,7 @@ const config = require("../config/config");
 const endpoints = [
     {
         description: "API Mencari Surah Berdasarkan Optional Parameter yang Diizinkan",
-        endpoint: `${config.value.BASE_URL}/v1/surah`,
+        endpoint: `${config.value.BASE_URL}/surah`,
         parameter: [
             "t",
             "r",
@@ -15,7 +15,7 @@ const endpoints = [
             "v = untuk mencari surah berdasarkan jumlah ayat",
             "tanpa parameter = menampilkan data surah Al-Quran"
         ],
-        example: `${config.value.BASE_URL}/v1/surah?t=pembukaan&r=makkiyah&v=7`
+        example: `${config.value.BASE_URL}/surah?t=pembukaan&r=makkiyah&v=7`
     }
 ];
 

@@ -5,16 +5,16 @@ const CustomApiError = require("../utilities/CustomApiError");
 
 /* eslint-disable no-unused-vars */
 exports.getSurahByQuery = (t, r, v) => {
+    //DEFINE DEFAULT PARAM
     t = (typeof t === "undefined") ? "" : t;
     r = (typeof r === "undefined") ? "" : r;
     v = (typeof v === "undefined") ? "" : v;
 
+    // GET SURAH
     const listSurah = quran.map(({ ayahs, bismillah, audio, ...rest }) => rest);
-
     let indexOfTranslation = [];
     let listIndexOfRevelation = [];
     let listIndexOfVerse = [];
-
     listSurah.forEach((element, index) => {
         if (element.translation.toLowerCase() === t.toLowerCase()) {
             indexOfTranslation.push(index);
@@ -27,6 +27,7 @@ exports.getSurahByQuery = (t, r, v) => {
         }
     });
 
+    // HANDLE NOT FOUND SURAH
     function notFoundSurah(t, r, v) {
         if (t !== "" && indexOfTranslation.length === 0) {
             throw new CustomApiError(404, "Could't found surah!");
@@ -40,6 +41,7 @@ exports.getSurahByQuery = (t, r, v) => {
     }
     notFoundSurah(t, r, v);
 
+    // MERGE INDEX OF RESULT
     const values = [];
     const mergeIndex = [];
     mergeIndex.push(indexOfTranslation, listIndexOfRevelation, listIndexOfVerse);
@@ -49,6 +51,7 @@ exports.getSurahByQuery = (t, r, v) => {
         }
     });
 
+    // GET RESULT
     let result = [];
     const commonValues = _.intersection(...values);
     commonValues.forEach((element) => {

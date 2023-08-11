@@ -1,7 +1,6 @@
 const express = require("express");
 const homeRoute = require("./home.route");
-const surahRouteV1 = require("./v1.surah.route");
-const surahRouteV2 = require("./v2.surah.route");
+const surahRoute = require("./surah.route");
 
 // Instance
 const router = express.Router();
@@ -12,12 +11,8 @@ const routes = [
         route: homeRoute,
     },
     {
-        path: "/v1/surah",
-        route: surahRouteV1,
-    },
-    {
-        path: "/v2/surah",
-        route: surahRouteV2,
+        path: "/surah",
+        route: surahRoute,
     }
 ];
 

@@ -26,6 +26,7 @@ const home = (req, res) => {
     res.json({
         endpoints,
         maintainer: "Nahdian",
+        github_link: "https://github.com/nahdian-dev/quran-verse-explorer",
         references: {
             email: "nahdian.dev@gmail.com",
             github: "https://github.com/nahdian-dev",

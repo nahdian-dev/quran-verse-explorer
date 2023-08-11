@@ -15,8 +15,7 @@
             "always"
         ],
         "quotes": [
-            "error",
-            "double"
+            "error"
         ]
     }
 }

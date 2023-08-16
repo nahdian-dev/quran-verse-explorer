@@ -1,13 +1,8 @@
 const request = require("supertest");
-const app = require("../../src/index");
-const server = require("../../src/index");
+const app = require("../../src/app");
 
 describe("API Endpoint Testing", () => {
-    afterAll((done) => {
-        server.close(done);
-    });
-
-    test("GET / should return a object", async () => {
+    it("GET / should return a object", async () => {
         const response = await request(app).get("/");
 
         expect(response.status).toBe(200);
@@ -21,7 +16,7 @@ describe("API Endpoint Testing", () => {
         );
     });
 
-    test("GET /surah should return array of object with length 114", async () => {
+    it("GET /surah should return array of object with length 114", async () => {
         const response = await request(app).get("/surah");
 
         expect(response.status).toBe(200);
@@ -34,7 +29,7 @@ describe("API Endpoint Testing", () => {
     });
 
     describe("When surah is exist", () => {
-        test("GET /surah/{query} should return surahs object", async () => {
+        it("GET /surah/{query} should return surahs object", async () => {
             const t = "manusia";
             const v = "31";
             const r = "madaniyah";
@@ -51,7 +46,7 @@ describe("API Endpoint Testing", () => {
     });
 
     describe("When surah is doesn't exist", () => {
-        test("GET /surah/{query} should return surahs object", async () => {
+        it("GET /surah/{query} should return surahs object", async () => {
             const t = "manusia";
             const v = "11";
             const r = "madaniyah";
@@ -68,5 +63,4 @@ describe("API Endpoint Testing", () => {
             );
         });
     });
-
 });

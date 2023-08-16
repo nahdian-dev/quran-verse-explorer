@@ -1,31 +1,19 @@
+const logger = require("../src/config/logger");
+
 const config = require("./config/config");
 const app = require("./app");
 
-const server = app.listen(config.value.PORT, () => {
-    console.log(`- Server are listening on port: ${config.value.PORT}`);
-});
+if (config.value.NODE_ENV !== "test") {
+    app.listen(config.value.PORT, () => {
+        logger.info(`Server are listening on port: ${config.value.NODE_ENV}`);
+    });
+}
 
-const exitHandler = () => {
-    if (server) {
-        server.close(() => {
-            process.exit(1);
-        });
-    } else {
+process
+    .on("unhandledRejection", (reason, p) => {
+        logger.error(reason, "Unhandled Rejection at Promise", p);
+    })
+    .on("uncaughtException", (error) => {
+        logger.error(error, "Uncaught Exception thrown");
         process.exit(1);
-    }
-};
-
-const unexpectedErrorHandler = () => {
-    exitHandler();
-};
-
-process.on("uncaughtException", unexpectedErrorHandler);
-process.on("unhandledRejection", unexpectedErrorHandler);
-
-process.on("SIGTERM", () => {
-    if (server) {
-        server.close();
-    }
-});
-
-module.exports = server;
+    });
